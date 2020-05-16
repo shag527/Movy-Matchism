@@ -4,7 +4,7 @@
 <head>
   {% load static %}
   <meta charset="utf-8">
-  <title>Regna Bootstrap Template</title>
+  <title>CineMatch</title>
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <meta content="" name="keywords">
   <meta content="" name="description">
@@ -25,6 +25,7 @@
 
   <!-- Main Stylesheet File -->
   <link href="{% static 'css/style.css' %}" rel="stylesheet">
+  <link href="{% static 'css/form.css' %}" rel="stylesheet">
 
   <!-- =======================================================
     Theme Name: Regna
@@ -44,14 +45,14 @@
 
       <div id="logo" class="pull-left">
         <!-- Uncomment below if you prefer to use a text logo -->
-        <h2><a href="#hero">Cinemach</a></h2>
+        <h2><a href="#hero">Cinematch</a></h2>
       </div>
 
       <nav id="nav-menu-container">
         <ul class="nav-menu">
           <li class="menu-active"><a href="#hero">Home</a></li>
-          <li><a href="#about">About Us</a></li>
-          <li><a href="#services">Services</a></li>
+          <li><a href="#about">Search Movie</a></li>
+          <li><a href="#facts">Services</a></li>
           <li><a href="#portfolio">Portfolio</a></li>
           <li><a href="#team">Team</a></li>
           <li class="menu-has-children"><a href="">Drop Down</a>
@@ -93,40 +94,51 @@
       About Us Section
     ============================-->
     <section id="about">
-      <div class="container">
-        <div class="row about-container">
+            <center>
+  
+  <h2>Search your Movies here</h2>
 
-          <div class="col-lg-6 content order-lg-1 order-2">
-            <h2 class="title">Few Words About Us</h2>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-            </p>
+  <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search Movies">
 
-            <div class="icon-box wow fadeInUp">
-              <div class="icon"><i class="fa fa-shopping-bag"></i></div>
-              <h4 class="title"><a href="">Eiusmod Tempor</a></h4>
-              <p class="description">Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi</p>
-            </div>
+  <ul id="myUL">
+  <li><a href="#">Avatar</a></li>
+  <li><a href="#">Divergent</a></li>
 
-            <div class="icon-box wow fadeInUp" data-wow-delay="0.2s">
-              <div class="icon"><i class="fa fa-photo"></i></div>
-              <h4 class="title"><a href="">Magni Dolores</a></h4>
-              <p class="description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
-            </div>
+  <li><a href="#">The Maze Runner</a></li>
+  <li><a href="#">Jupyter Ascending</a></li>
 
-            <div class="icon-box wow fadeInUp" data-wow-delay="0.4s">
-              <div class="icon"><i class="fa fa-bar-chart"></i></div>
-              <h4 class="title"><a href="">Dolor Sitema</a></h4>
-              <p class="description">Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat tarad limino ata</p>
-            </div>
+  <li><a href="#">John Carter</a></li>
+  <li><a href="#">Captain America: Civil War</a></li>
+  <li><a href="#">The Ice Pirates</a></li>
+</ul>
 
-          </div>
+</center>
 
-          <div class="col-lg-6 background order-lg-2 order-1 wow fadeInRight"></div>
-        </div>
+<script>
+function myFunction() {
+  // Declare variables
+  var input, filter, ul, li, a, i, txtValue;
+  input = document.getElementById('myInput');
+  filter = input.value.toUpperCase();
+  ul = document.getElementById("myUL");
+  li = ul.getElementsByTagName('li');
 
-      </div>
+  // Loop through all list items, and hide those who don't match the search query
+  for (i = 0; i < li.length; i++) {
+    a = li[i].getElementsByTagName("a")[0];
+    txtValue = a.textContent || a.innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      li[i].style.display = "";
+    } else {
+      li[i].style.display = "none";
+    }
+  }
+}
+</script>
+</div>
+        
     </section><!-- #about -->
+    <br><br><br><br><br><br><br><br>
 
     <!--==========================
       Facts Section
@@ -135,7 +147,6 @@
       <div class="container wow fadeIn">
         <div class="section-header">
           <h3 class="section-title">Facts</h3>
-          <p class="section-description">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque</p>
         </div>
         <div class="row counters">
 

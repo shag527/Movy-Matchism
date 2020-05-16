@@ -11,11 +11,27 @@ from rest_framework.parsers import JSONParser
 from . models import Movies_list
 import pickle
 from . serializers import Movies_list_Serializer
-from .models import Movies_list
+from .forms import MoviesForm
 
 # Create your views here.
 def home(request):
-	return render(request,'home.html')	
+	if request.method=='POST':
+		form=MoviesForm(request.POST)
+		if form.is_valid():
+			movie1=form.cleaned_data['movie1']
+			rating1=form.cleaned_data['rating1']
+			movie2=form.cleaned_data['movie2']
+			rating2=form.cleaned_data['rating2']
+			movie3=form.cleaned_data['movie3']
+			rating3=form.cleaned_data['rating3']
+			movie4=form.cleaned_data['movie4']
+			rating4=form.cleaned_data['rating4']
+			movie5=form.cleaned_data['movie5']
+			rating5=form.cleaned_data['rating5']
+
+			
+	form=MoviesForm()
+	return render(request,'home.html',{'form':form})
 
 
 def profile(request):
@@ -79,8 +95,14 @@ def show_movies(request):
      
 
 class recommend_movies(APIView):
+
 	def get(self, request):
 		movies=Movies_list.objects.all()
 		serializer=Movies_list_Serializer(movies,many=True)
 		return Response({"movies":serializer.data})
-    
+
+	
+
+
+
+	

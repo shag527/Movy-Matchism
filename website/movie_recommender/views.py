@@ -3,17 +3,18 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login,authenticate
 from rest_framework import viewsets, status
 from rest_framework.decorators import api_view
+from rest_framework.views import APIView
 from django.core import serializers
 from rest_framework.response import Response
 from django.http import JsonResponse
 from rest_framework.parsers import JSONParser
+from . models import Movies_list
 import pickle
-import numpy as np
+from . serializers import Movies_list_Serializer
+from .models import Movies_list
 
 # Create your views here.
 def home(request):
-	x=open('/home/shagun/Documents/movie_dataset','rb')
-	data=pickle.load(x)
 	return render(request,'home.html')	
 
 
@@ -72,9 +73,14 @@ def show_movies(request):
         i+=1
         list.append(get_title_from_index(movie[0]))
         if i==50:
-        	break
+        	break   	
 
-    return render(request,'recommendations.html',{'key':list})    	
-       	
+    return render(request,'recommendations.html',{'key':(list)})    	
+     
 
-
+class recommend_movies(APIView):
+	def get(self, request):
+		movies=Movies_list.objects.all()
+		serializer=Movies_list_Serializer(movies,many=True)
+		return Response({"movies":serializer.data})
+    

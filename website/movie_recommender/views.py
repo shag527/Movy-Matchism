@@ -2,7 +2,6 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login,authenticate
 from rest_framework import viewsets, status
-from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from django.core import serializers
 from rest_framework.response import Response
@@ -12,26 +11,9 @@ from . models import Movies_list
 import pickle
 from . serializers import Movies_list_Serializer
 from .forms import MoviesForm
+import pandas as pd
 
 # Create your views here.
-def home(request):
-	if request.method=='POST':
-		form=MoviesForm(request.POST)
-		if form.is_valid():
-			movie1=form.cleaned_data['movie1']
-			rating1=form.cleaned_data['rating1']
-			movie2=form.cleaned_data['movie2']
-			rating2=form.cleaned_data['rating2']
-			movie3=form.cleaned_data['movie3']
-			rating3=form.cleaned_data['rating3']
-			movie4=form.cleaned_data['movie4']
-			rating4=form.cleaned_data['rating4']
-			movie5=form.cleaned_data['movie5']
-			rating5=form.cleaned_data['rating5']
-
-			
-	form=MoviesForm()
-	return render(request,'home.html',{'form':form})
 
 
 def profile(request):
@@ -56,53 +38,139 @@ def register(request):
 	return render(request,'register.html',args)	
 
 
-def get_title_from_index(index):
+def get_title_from_index(index,data):
+	try:
+		return data[data.index==index]['title'].values[0]
+	except:
+		return HttpResponse('Provide Valid NAME')
 
-	x=open('/home/shagun/Documents/movie_dataset','rb')
-	data=pickle.load(x)
-	return data[data.index==index]['title'].values[0]
+def get_index_from_title(title,data):
+	try:
+		return data[data.title==title]['index'].values[0]  
+	except:
+		return HttpResponse('Provide Valid NAME')	
 
-def get_index_from_title(title):
+def get_score(movie,rating,model):
+	score=model[movie]*(rating-2.5)
+	score=score.sort_values(ascending=False)
+	return score		
 
-	x=open('/home/shagun/Documents/movie_dataset','rb')
-	data=pickle.load(x)
-	return data[data.title==title]['index'].values[0]  	
+
+def get_context_recommendations(movie,data):
+	try:
+		f1= open('/home/shagun/Documents/Ml Projects/Context_recommender_model','rb')
+		context_model=pickle.load(f1)
+		movie_index=get_index_from_title(movie,data)
+		similar_movies=list(enumerate(context_model[movie_index]))
+		sorted_similar_movies=sorted(similar_movies,key=lambda x:x[1],reverse=True)	
+		return sorted_similar_movies
+
+	except:
+		return HttpResponse('Provide Valid NAME')
+
+def get_collaborative_recommendations(movie,rating,list):
+	try:
+		f2=open('/home/shagun/Documents/Collaborative_recommender_model','rb')
+		Collaborative_model=pickle.load(f2)	
+		list=list.append(get_score(movie,rating,Collaborative_model),ignore_index=True)
+		return list
+	except:
+	    return HttpResponse('Not Valid')	
 
 
-def get_recommendations():
+def show_context_movies(movie,list):
+	try:
+		x=open('/home/shagun/Documents/movie_dataset','rb')
+		data=pickle.load(x)	
+		movies_list=get_context_recommendations(movie,data) 
+		i=0
+		for movie in movies_list:
+			i+=1
+			list.append(get_title_from_index(movie[0],data))
+			if i==50:
+				break   
 
-	f= open('/home/shagun/Documents/Ml Projects/Context_recommender_model','rb')
-	context_model=pickle.load(f)	
+	except:
+		return HttpResponse('Provide Valid NAME')		
 
-	movie_index=get_index_from_title('Captain America: Civil War')
-	similar_movies=list(enumerate(context_model[movie_index]))
-	sorted_similar_movies=sorted(similar_movies,key=lambda x:x[1],reverse=True)	
 
-	return sorted_similar_movies
+def show_collaborative_movies(list,Collaborative_list):	
+        try:				
+        	Collaborative_list=Collaborative_list.columns
+        	i=0
+        	for movie in Collaborative_list:
+        		list.append(Collaborative_list[i])
+        		i+=1
+        		if i==50:
+        			break
+        	return list		
 
-def show_movies(request):
-    movies_list=get_recommendations() 
-    i=0
-    dict={}
-    list=[]
-    for movie in movies_list:
-        i+=1
-        list.append(get_title_from_index(movie[0]))
-        if i==50:
-        	break   	
+        except:
+            return HttpResponse('Not valid')		
 
-    return render(request,'recommendations.html',{'key':(list)})    	
-     
+
+def home(request):
+	if request.method=='POST':
+		form=MoviesForm(request.POST)
+		if form.is_valid():
+			movie1=form.cleaned_data['movie1']
+			rating1=form.cleaned_data['rating1']
+			movie2=form.cleaned_data['movie2']
+			rating2=form.cleaned_data['rating2']
+			movie3=form.cleaned_data['movie3']
+			rating3=form.cleaned_data['rating3']
+			movie4=form.cleaned_data['movie4']
+			rating4=form.cleaned_data['rating4']
+			movie5=form.cleaned_data['movie5']
+			rating5=form.cleaned_data['rating5']
+		context_list=[]
+		Collaborative_list=pd.DataFrame()	
+		print(movie1,movie2,movie3,movie4,movie5)
+		if rating1:
+			Collaborative_list=get_collaborative_recommendations(movie1,rating1,Collaborative_list)
+			show_context_movies(movie1,context_list)
+		else:	
+			show_context_movies(movie1,context_list)
+		if movie2:	
+			if rating2:
+				Collaborative_list=get_collaborative_recommendations(movie2,rating2,Collaborative_list)
+				show_context_movies(movie2,context_list)
+			else:	
+				show_context_movies(movie2,context_list)
+		if movie3:	
+			if rating2:
+				Collaborative_list=get_collaborative_recommendations(movie3,rating3,Collaborative_list)
+				show_context_movies(movie3,context_list)
+			else:	
+				show_context_movies(movie3,context_list)
+		if movie4:	
+			if rating2:
+				Collaborative_list=get_collaborative_recommendations(movie4,rating4,Collaborative_list)
+				show_context_movies(movie4,context_list)
+			else:	
+				show_context_movies(movie4,context_list)
+		if movie5:	
+			if rating2:
+				Collaborative_list=get_collaborative_recommendations(movie5,rating5,Collaborative_list)
+				show_context_movies(movie5,context_list)
+			else:	
+				show_context_movies(movie5,context_list)
+
+
+		Collaborative_final_list=[]
+		Collaborative_final_list=show_collaborative_movies(Collaborative_final_list,Collaborative_list)
+		
+		return render(request,'recommendations.html',{'key1':(context_list),'key2':(Collaborative_final_list)}) 
+
+			
+	form=MoviesForm()
+	return render(request,'home.html',{'form':form})
+
+
 
 class recommend_movies(APIView):
 
 	def get(self, request):
 		movies=Movies_list.objects.all()
 		serializer=Movies_list_Serializer(movies,many=True)
-		return Response({"movies":serializer.data})
-
-	
-
-
-
-	
+		return Response({"movies":serializer.data})	

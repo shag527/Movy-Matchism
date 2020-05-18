@@ -109,6 +109,20 @@ def show_collaborative_movies(list,Collaborative_list):
             return HttpResponse('Not valid')		
 
 
+def check_seen(context_list,collaborative_final_list):
+    final_list=[]
+    for movie in context_list:
+    	if movie not in final_list:
+    		final_list.append(movie)
+
+    for movie in collaborative_final_list:
+    	if movie not in final_list:
+    		final_list.append(movie)
+
+    return final_list		
+
+
+
 def home(request):
 	if request.method=='POST':
 		form=MoviesForm(request.POST)
@@ -157,10 +171,14 @@ def home(request):
 				show_context_movies(movie5,context_list)
 
 
-		Collaborative_final_list=[]
-		Collaborative_final_list=show_collaborative_movies(Collaborative_final_list,Collaborative_list)
+		collaborative_final_list=[]
+		collaborative_final_list=show_collaborative_movies(collaborative_final_list,Collaborative_list)
+
+		final_list=[]
+		final_list=check_seen(context_list,collaborative_final_list)
+		#print(final_list)
 		
-		return render(request,'recommendations.html',{'key1':(context_list),'key2':(Collaborative_final_list)}) 
+		return render(request,'recommendations.html',{'key':(final_list)}) 
 
 			
 	form=MoviesForm()
@@ -173,4 +191,10 @@ class recommend_movies(APIView):
 	def get(self, request):
 		movies=Movies_list.objects.all()
 		serializer=Movies_list_Serializer(movies,many=True)
-		return Response({"movies":serializer.data})	
+		return Response({"movies":serializer.data})
+
+
+class MoviesViewSet(viewsets.ModelViewSet):
+	queryset=Movies_list.objects.all()
+	serializer_class=Movies_list_Serializer
+

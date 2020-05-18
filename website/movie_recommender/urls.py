@@ -2,8 +2,12 @@ from django.conf.urls import url
 from django.urls import path, include
 from . import views
 from django.contrib.auth.views import LoginView, LogoutView
-from .views import recommend_movies
+from .views import recommend_movies, MoviesViewSet
+from rest_framework import routers
 
+
+router=routers.DefaultRouter()
+router.register('',MoviesViewSet)
 
 urlpatterns=[
     
@@ -13,6 +17,7 @@ urlpatterns=[
     url(r'logout/',LogoutView.as_view(next_page='home'),name="logout"),
     url(r'^register/$',views.register,name='register'),
     url(r'^recommendations/$',views.home,name='show_movies'),
-    path('recommend_movies/',recommend_movies.as_view()),
+    path('api1/recommend_movies/',recommend_movies.as_view()),
+    path('api2/recommend_movies/',include(router.urls)),
     url(r'^recommend_movies/',views.recommend_movies,name='movies'),
 ]

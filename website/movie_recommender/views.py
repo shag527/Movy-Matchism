@@ -12,12 +12,14 @@ import pickle
 from . serializers import Movies_list_Serializer
 from .forms import MoviesForm
 import pandas as pd
+from .apps import MovieRecommenderConfig
 
 # Create your views here.
 
 
 def profile(request):
-    return render(request,'profile.html')	    
+	form=MoviesForm()
+	return render(request,'profile.html',{'form':form})	    
 
 
 def register(request):
@@ -58,8 +60,7 @@ def get_score(movie,rating,model):
 
 def get_context_recommendations(movie,data):
 	try:
-		f1= open('/home/shagun/Documents/Ml Projects/Context_recommender_model','rb')
-		context_model=pickle.load(f1)
+		context_model=MovieRecommenderConfig.context_model
 		movie_index=get_index_from_title(movie,data)
 		similar_movies=list(enumerate(context_model[movie_index]))
 		sorted_similar_movies=sorted(similar_movies,key=lambda x:x[1],reverse=True)	
@@ -70,8 +71,7 @@ def get_context_recommendations(movie,data):
 
 def get_collaborative_recommendations(movie,rating,list):
 	try:
-		f2=open('/home/shagun/Documents/Collaborative_recommender_model','rb')
-		Collaborative_model=pickle.load(f2)	
+		Collaborative_model=MovieRecommenderConfig.Collaborative_model	
 		list=list.append(get_score(movie,rating,Collaborative_model),ignore_index=True)
 		return list
 	except:
@@ -80,8 +80,7 @@ def get_collaborative_recommendations(movie,rating,list):
 
 def show_context_movies(movie,list):
 	try:
-		x=open('/home/shagun/Documents/movie_dataset','rb')
-		data=pickle.load(x)	
+		data=MovieRecommenderConfig.data
 		movies_list=get_context_recommendations(movie,data) 
 		i=0
 		for movie in movies_list:
@@ -137,48 +136,9 @@ def home(request):
 			rating4=form.cleaned_data['rating4']
 			movie5=form.cleaned_data['movie5']
 			rating5=form.cleaned_data['rating5']
-		context_list=[]
-		Collaborative_list=pd.DataFrame()	
-		print(movie1,movie2,movie3,movie4,movie5)
-		if rating1:
-			Collaborative_list=get_collaborative_recommendations(movie1,rating1,Collaborative_list)
-			show_context_movies(movie1,context_list)
-		else:	
-			show_context_movies(movie1,context_list)
-		if movie2:	
-			if rating2:
-				Collaborative_list=get_collaborative_recommendations(movie2,rating2,Collaborative_list)
-				show_context_movies(movie2,context_list)
-			else:	
-				show_context_movies(movie2,context_list)
-		if movie3:	
-			if rating2:
-				Collaborative_list=get_collaborative_recommendations(movie3,rating3,Collaborative_list)
-				show_context_movies(movie3,context_list)
-			else:	
-				show_context_movies(movie3,context_list)
-		if movie4:	
-			if rating2:
-				Collaborative_list=get_collaborative_recommendations(movie4,rating4,Collaborative_list)
-				show_context_movies(movie4,context_list)
-			else:	
-				show_context_movies(movie4,context_list)
-		if movie5:	
-			if rating2:
-				Collaborative_list=get_collaborative_recommendations(movie5,rating5,Collaborative_list)
-				show_context_movies(movie5,context_list)
-			else:	
-				show_context_movies(movie5,context_list)
-
-
-		collaborative_final_list=[]
-		collaborative_final_list=show_collaborative_movies(collaborative_final_list,Collaborative_list)
-
-		final_list=[]
-		final_list=check_seen(context_list,collaborative_final_list)
 		#print(final_list)
 		
-		return render(request,'recommendations.html',{'key':(final_list)}) 
+		return render(request,'recommendations.html',{'key':'movie'}) 
 
 			
 	form=MoviesForm()
@@ -193,8 +153,86 @@ class recommend_movies(APIView):
 		serializer=Movies_list_Serializer(movies,many=True)
 		return Response({"movies":serializer.data})
 
+	def post(self,request):
+		data=request.data
+		serializer=Movies_list_Serializer(data=data)
+		if serializer.is_valid():
+			serializer.save()
+			return Response(serializer.data,status=201)
+		return Response(serializer.erros,status=400)
+
 
 class MoviesViewSet(viewsets.ModelViewSet):
 	queryset=Movies_list.objects.all()
 	serializer_class=Movies_list_Serializer
+ 
 
+def MovieView(request):
+	if request.method=='GET':
+		movies=Movies_list.objects.all()
+		serializer= Movies_list_Serializer(movies,many=True)	
+		return JsonResponse(serializer.data,safe=False)
+
+	elif request.method=="POST":
+		data=JSONParser().parse(request.POST)
+		serializer=Movies_list_Serializer(data)
+		if serializer.is_valid():
+			serializer.save()
+			return JsonResponse(serializer.data,status=201)
+		return JsonResponse(serializer.erros,status=400)
+
+
+class call_model(APIView):
+	def get(self,request):
+		if request.method=='GET':
+			movie1=request.GET.get('movie1')
+			rating1=request.GET.get('rating1')
+			movie2=request.GET.get('movie2')
+			rating2=request.GET.get('rating2')
+			movie3=request.GET.get('movie3')
+			rating3=request.GET.get('rating3')
+			movie4=request.GET.get('movie4')
+			rating4=request.GET.get('rating4')
+			movie5=request.GET.get('movie5')
+			rating5=request.GET.get('rating5')
+
+
+			context_list=[]
+			Collaborative_list=pd.DataFrame()	
+			#print(movie1,movie2,movie3,movie4,movie5)
+			if rating1:
+				Collaborative_list=get_collaborative_recommendations(movie1,rating1,Collaborative_list)
+				show_context_movies(movie1,context_list)
+			else:	
+				show_context_movies(movie1,context_list)
+			if movie2:	
+				if rating2:
+					Collaborative_list=get_collaborative_recommendations(movie2,rating2,Collaborative_list)
+					show_context_movies(movie2,context_list)
+				else:	
+					show_context_movies(movie2,context_list)
+			if movie3:	
+				if rating3:
+					Collaborative_list=get_collaborative_recommendations(movie3,rating3,Collaborative_list)
+					show_context_movies(movie3,context_list)
+				else:	
+					show_context_movies(movie3,context_list)
+			if movie4:	
+				if rating4:
+					Collaborative_list=get_collaborative_recommendations(movie4,rating4,Collaborative_list)
+					show_context_movies(movie4,context_list)
+				else:	
+					show_context_movies(movie4,context_list)
+			if movie5:	
+				if rating5:
+					Collaborative_list=get_collaborative_recommendations(movie5,rating5,Collaborative_list)
+					show_context_movies(movie5,context_list)
+				else:	
+					show_context_movies(movie5,context_list)
+
+			collaborative_final_list=[]
+			collaborative_final_list=show_collaborative_movies(collaborative_final_list,Collaborative_list)
+
+			final_list=[]
+			final_list=check_seen(context_list,collaborative_final_list)
+			return JsonResponse({'key':final_list})

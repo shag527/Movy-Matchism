@@ -2,13 +2,23 @@
 <head>
 	</head>
 	<body>
-		<h2>You have logged in</h2>
+		       <center>
+		<h1>Welcome</h1>
 <div class="navigation">
+
+  
+  <h2>Search your Movies here</h2>
+
+  <form method='POST'>
+  
+  {% csrf_token %}
+    {{form|linebreaks}}
+    <button type='submit'>Search</button>
+</form>
   
 	<a class="button" href="{% url 'home' %}">
-  	<img src="https://pbs.twimg.com/profile_images/378800000639740507/fc0aaad744734cd1dbc8aeb3d51f8729_400x400.jpeg">
-  
   <div class="logout">LOGOUT</div>
+  </center>
 
 	</a>
   

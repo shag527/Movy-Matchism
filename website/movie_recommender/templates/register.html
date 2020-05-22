@@ -7,7 +7,7 @@
 		<h2>Register here</h2>
 <form method= "POST">
 	{% csrf_token %}
-	{{form.as_p}}
+	{{register_form|linebreaks}}
 	<button type='submit'>Register</button>
 </form>
 </center>

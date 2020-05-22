@@ -34,9 +34,42 @@ def profile(request):
 			post1.rating5=form.cleaned_data['rating5']
 			post1.save()
 
+			movie1=form.cleaned_data['movie1']
+			rating1=form.cleaned_data['rating1']
+			movie2=form.cleaned_data['movie2']
+			rating2=form.cleaned_data['rating2']
+			movie3=form.cleaned_data['movie3']
+			rating3=form.cleaned_data['rating3']
+			movie4=form.cleaned_data['movie4']
+			rating4=form.cleaned_data['rating4']
+			movie5=form.cleaned_data['movie5']
+			rating5=form.cleaned_data['rating5']
+			
+			url='http://127.0.0.1:8000/nr-api/recommend_movies/?'
+			url=url+'movie1='+movie1
+			if rating1:
+				url=url+'&rating1:='+str(rating1)
+			if movie2:
+				url=url+'&movie2='+movie2
+			if rating2:
+				url=url+'&rating2:='+str(rating2)
+			if movie3:
+				url=url+'&movie3='+movie3
+			if rating3:
+				url=url+'&rating3:='+str(rating3)
+			if movie4:
+				url=url+'&movie4='+movie4
+			if rating4:
+				url=url+'&rating4:='+str(rating4)
+			if movie5:
+				url=url+'&movie5='+movie5
+			if rating5:
+				url=url+'&rating5:='+str(rating5)
+
+			response=requests.get(url)
 		#print(final_list)
 		
-		return render(request,'recommendations.html',{'key':'Added in the database'}) 
+		return render(request,'recommendations.html',{'key':response.text}) 
 
 
 			
@@ -53,12 +86,12 @@ def register(request):
 			raw_password=form.cleaned_data.get('password1')
 			user=authenticate(username=username,password=raw_password)
 			login(request,user)
-			return render(request,'profile.html')
-		else:
-			return HttpResponse('Invalid Form')
+			return redirect('profile')
+		'''else:
+			return HttpResponse('Invalid Form')'''
 	else:
 	    form=UserCreationForm()
-	    args={'form':form}
+	args={'register_form':form}
 	return render(request,'register.html',args)	
 
 
@@ -181,7 +214,6 @@ def home(request):
 				url=url+'&rating5:='+str(rating5)
 
 			response=requests.get(url)
-			response=response
 
 		#print(final_list)
 		

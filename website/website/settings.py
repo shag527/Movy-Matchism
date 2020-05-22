@@ -132,7 +132,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL='/profile/'
-<<<<<<< HEAD
 MODELS=os.path.join(BASE_DIR,'movie_recommender/models')
-=======
->>>>>>> c05054faa36ef02768daae5440025a5e9b0a1169

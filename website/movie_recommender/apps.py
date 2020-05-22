@@ -1,15 +1,11 @@
 from django.apps import AppConfig
-<<<<<<< HEAD
 from django.conf import settings
 import os
 import pickle
-=======
->>>>>>> c05054faa36ef02768daae5440025a5e9b0a1169
 
 
 class MovieRecommenderConfig(AppConfig):
     name = 'movie_recommender'
-<<<<<<< HEAD
 
     #creating path to models
 
@@ -27,5 +23,4 @@ class MovieRecommenderConfig(AppConfig):
 
     x=open(data_path,'rb')
     data=pickle.load(x)	
-=======
->>>>>>> c05054faa36ef02768daae5440025a5e9b0a1169
+

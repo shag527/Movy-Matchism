@@ -9,6 +9,7 @@ from rest_framework import routers
 urlpatterns=[
     
     url(r'home/',views.home,name='home'),
+    url(r'contact/',views.contact_us,name='contact_us'),
     url(r'profile/',views.profile,name='profile'),
     url(r'login/',LoginView.as_view(template_name='login.html'),name="login"),
     url(r'logout/',LogoutView.as_view(next_page='home'),name="logout"),

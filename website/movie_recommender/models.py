@@ -7,7 +7,12 @@ class Contact_Us(models.Model):
 	user=models.OneToOneField(User,on_delete=models.CASCADE)
 	email=models.EmailField(max_length=70,blank=True)
 	subject=models.CharField(default='',max_length=50)
+	phone_no=models.IntegerField(default=None)
 	message=models.TextField(max_length=500)
+
+
+	def __str__(self):
+	    return self.subject 
 
 
 class Movies_list(models.Model):

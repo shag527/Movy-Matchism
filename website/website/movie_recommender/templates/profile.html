@@ -1,0 +1,30 @@
+<html>
+<head>
+	</head>
+	<body>
+		       <center>
+		<h1>Welcome</h1>
+<div class="navigation">
+
+  
+  <h2>Search your Movies here</h2>
+
+  <form method='POST'>
+  
+  {% csrf_token %}
+    {{form|linebreaks}}
+    <button type='submit'>Search</button>
+</form>
+  
+	<a class="button" href="{% url 'home' %}">
+  <div class="logout">LOGOUT</div>
+  </center>
+  
+  <div class="logout">LOGOUT</div>
+
+	</a>
+  
+</div>
+
+ </body>
+ </html> 

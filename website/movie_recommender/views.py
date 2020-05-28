@@ -7,12 +7,14 @@ from django.core import serializers
 from rest_framework.response import Response
 from django.http import JsonResponse
 from rest_framework.parsers import JSONParser
-from . models import Movies_list
+from . models import Movies_list, Contact_Us
 import pickle, requests
 from . serializers import Movies_list_Serializer
 from .forms import MoviesForm
 import pandas as pd
 from .apps import MovieRecommenderConfig
+import os
+from twilio.rest import Client
 
 # Create your views here.
 
@@ -215,14 +217,14 @@ def home(request):
 
 			response=requests.get(url)
 
-		#print(final_list)
 		
-		return render(request,'recommendations.html',{'key':(response.text)}) 
+		return render(request,'recommendations.html',{'key':(response.text)})
 
 
-			
+
 	form=MoviesForm()
-	return render(request,'home.html',{'form':form})
+	return render(request,'home.html',{'form':form}) 
+
 
 
 
@@ -296,3 +298,27 @@ class call_model(APIView):
 			final_list=check_seen(context_list,collaborative_final_list)
 			#print(final_list)
 			return JsonResponse({'key':final_list})
+
+def contact_us(request):
+	account_sid='AC371b3c5dd7470a048c5375056a7dfc6f'
+	auth_token='b2bd62dd4779811183b2f907b4344ded'
+
+	client=Client(account_sid,auth_token)
+
+	if request.method=='POST':
+		name=request.POST.get('name')
+		email=request.POST.get('email')
+		phone_no=request.POST.get('phone_no')
+		message=request.POST.get('message')	
+
+		client.messages.create(
+		from_=phone_no,
+        to=+12055095818,
+        body=message
+	    )
+
+			
+		return HttpResponse("Thanks for your Message.")
+	
+	return render(request,home.html)
+

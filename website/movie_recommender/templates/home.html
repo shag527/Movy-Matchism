@@ -40,6 +40,7 @@
   <!--==========================
   Header
   ============================-->
+  <div style="background-image: url('{% static 'img/body.png' %});">
   <header id="header">
     <div class="container">
 
@@ -52,9 +53,7 @@
         <ul class="nav-menu">
           <li class="menu-active"><a href="#hero">Home</a></li>
           <li><a href="#about">Search Movie</a></li>
-          <li><a href="#facts">Services</a></li>
-          <li><a href="#portfolio">Portfolio</a></li>
-          <li><a href="#team">Team</a></li>
+          <li><a href="#portfolio">Movies</a></li>
           <li class="menu-has-children"><a href="#">Login/Register</a>
             <ul>
               <li><a href={% url "login" %}>Login</a></li>
@@ -136,75 +135,17 @@
     </section><!-- #facts -->
 
     <!--==========================
-      Services Section
-    ============================-->
-    <section id="services">
-      <div class="container wow fadeIn">
-        <div class="section-header">
-          <h3 class="section-title">Services</h3>
-          <p class="section-description">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque</p>
-        </div>
-        <div class="row">
-          <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
-            <div class="box">
-              <div class="icon"><a href=""><i class="fa fa-desktop"></i></a></div>
-              <h4 class="title"><a href="">Lorem Ipsum</a></h4>
-              <p class="description">Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.4s">
-            <div class="box">
-              <div class="icon"><a href=""><i class="fa fa-bar-chart"></i></a></div>
-              <h4 class="title"><a href="">Dolor Sitema</a></h4>
-              <p class="description">Minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat tarad limino ata</p>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.6s">
-            <div class="box">
-              <div class="icon"><a href=""><i class="fa fa-paper-plane"></i></a></div>
-              <h4 class="title"><a href="">Sed ut perspiciatis</a></h4>
-              <p class="description">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur</p>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
-            <div class="box">
-              <div class="icon"><a href=""><i class="fa fa-photo"></i></a></div>
-              <h4 class="title"><a href="">Magni Dolores</a></h4>
-              <p class="description">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.4s">
-            <div class="box">
-              <div class="icon"><a href=""><i class="fa fa-road"></i></a></div>
-              <h4 class="title"><a href="">Nemo Enim</a></h4>
-              <p class="description">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque</p>
-            </div>
-          </div>
-          <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.6s">
-            <div class="box">
-              <div class="icon"><a href=""><i class="fa fa-shopping-bag"></i></a></div>
-              <h4 class="title"><a href="">Eiusmod Tempor</a></h4>
-              <p class="description">Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi</p>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section><!-- #services -->
-
-    <!--==========================
     Call To Action Section
     ============================-->
     <section id="call-to-action">
       <div class="container wow fadeIn">
         <div class="row">
           <div class="col-lg-9 text-center text-lg-left">
-            <h3 class="cta-title">Call To Action</h3>
-            <p class="cta-text"> Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <h3 class="cta-title">Subscribe</h3>
+            <p class="cta-text"> Get movie recommendations straight to your inbox</p>
           </div>
           <div class="col-lg-3 cta-btn-container text-center">
-            <a class="cta-btn align-middle" href="#">Call To Action</a>
+            <a class="cta-btn align-middle" href="{% url "login" %}">Subscribe</a>
           </div>
         </div>
 
@@ -212,23 +153,23 @@
     </section><!-- #call-to-action -->
 
     <!--==========================
-      Portfolio Section
+      Movies Preview
     ============================-->
     <section id="portfolio">
       <div class="container wow fadeInUp">
         <div class="section-header">
-          <h3 class="section-title">Portfolio</h3>
-          <p class="section-description">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque</p>
+          <h3 class="section-title">Movies</h3>
+          <p class="section-description"></p>
         </div>
         <div class="row">
 
           <div class="col-lg-12">
             <ul id="portfolio-flters">
               <li data-filter=".filter-app, .filter-card, .filter-logo, .filter-web" class="filter-active">All</li>
-              <li data-filter=".filter-app">App</li>
-              <li data-filter=".filter-card">Card</li>
-              <li data-filter=".filter-logo">Logo</li>
-              <li data-filter=".filter-web">Web</li>
+              <li data-filter=".filter-app">Adventure</li>
+              <li data-filter=".filter-card">Sci-Fi</li>
+              <li data-filter=".filter-logo">Romance</li>
+              <li data-filter=".filter-web">Action</li>
             </ul>
           </div>
         </div>
@@ -236,120 +177,120 @@
         <div class="row" id="portfolio-wrapper">
           <div class="col-lg-3 col-md-6 portfolio-item filter-app">
             <a href="">
-              <img src="{% static 'img/portfolio/app1.jpg' %}" alt="">
+              <img src="{% static 'img/portfolio/movie1.jpg' %}" alt="">
               <div class="details">
-                <h4>App 1</h4>
-                <span>Alored dono par</span>
+                <h4></h4>
+                <span>The last Stand</span>
               </div>
             </a>
           </div>
 
           <div class="col-lg-3 col-md-6 portfolio-item filter-web">
             <a href="">
-              <img src="{% static 'img/portfolio/web2.jpg' %}" alt="">
+              <img src="{% static 'img/portfolio/movie2.jpg' %}" alt="">
               <div class="details">
-                <h4>Web 2</h4>
-                <span>Alored dono par</span>
+                <h4></h4>
+                <span>Spiderman2</span>
               </div>
             </a>
           </div>
 
           <div class="col-lg-3 col-md-6 portfolio-item filter-app">
             <a href="">
-              <img src="{% static 'img/portfolio/app3.jpg' %}" alt="">
+              <img src="{% static 'img/portfolio/movie3.jpg' %}" alt="">
               <div class="details">
-                <h4>App 3</h4>
-                <span>Alored dono par</span>
+                <h4></h4>
+                <span>Spiderman 3</span>
               </div>
             </a>
           </div>
 
           <div class="col-lg-3 col-md-6 portfolio-item filter-card">
             <a href="">
-              <img src="{% static 'img/portfolio/card1.jpg' %}" alt="">
+              <img src="{% static 'img/portfolio/movie4.jpg' %}" alt="">
               <div class="details">
-                <h4>Card 1</h4>
-                <span>Alored dono par</span>
+                <h4></h4>
+                <span>Valkyrie</span>
               </div>
             </a>
           </div>
 
           <div class="col-lg-3 col-md-6 portfolio-item filter-card">
             <a href="">
-              <img src="{% static 'img/portfolio/card2.jpg' %}" alt="">
+              <img src="{% static 'img/portfolio/movie5.jpg' %}" alt="">
               <div class="details">
-                <h4>Card 2</h4>
-                <span>Alored dono par</span>
+                <h4></h4>
+                <span>Gladiator</span>
               </div>
             </a>
           </div>
 
           <div class="col-lg-3 col-md-6 portfolio-item filter-web">
             <a href="">
-              <img src="{% static 'img/portfolio/web3.jpg' %}" alt="">
+              <img src="{% static 'img/portfolio/movie6.jpg' %}" alt="">
               <div class="details">
-                <h4>Web 3</h4>
-                <span>Alored dono par</span>
+                <h4></h4>
+                <span>Ice Age</span>
               </div>
             </a>
           </div>
 
           <div class="col-lg-3 col-md-6 portfolio-item filter-card">
             <a href="">
-              <img src="{% static 'img/portfolio/card3.jpg' %}" alt="">
+              <img src="{% static 'img/portfolio/movie7.jpg' %}" alt="">
               <div class="details">
-                <h4>Card 3</h4>
-                <span>Alored dono par</span>
+                <h4></h4>
+                <span>Transformers</span>
               </div>
             </a>
           </div>
 
           <div class="col-lg-3 col-md-6 portfolio-item filter-app">
             <a href="">
-              <img src="{% static 'img/portfolio/app2.jpg' %}" alt="">
+              <img src="{% static 'img/portfolio/movie8.jpg' %}" alt="">
               <div class="details">
-                <h4>App 2</h4>
-                <span>Alored dono par</span>
+                <h4></h4>
+                <span>Magneto Testament</span>
               </div>
             </a>
           </div>
 
           <div class="col-lg-3 col-md-6 portfolio-item filter-logo">
             <a href="">
-              <img src="{% static 'img/portfolio/logo1.jpg' %}" alt="">
+              <img src="{% static 'img/portfolio/movie9.jpg' %}" alt="">
               <div class="details">
-                <h4>Logo 1</h4>
-                <span>Alored dono par</span>
+                <h4></h4>
+                <span>Kung Fu Panda</span>
               </div>
             </a>
           </div>
 
           <div class="col-lg-3 col-md-6 portfolio-item filter-logo">
             <a href="">
-              <img src="{% static 'img/portfolio/logo3.jpg' %}" alt="">
+              <img src="{% static 'img/portfolio/movie10.jpg' %}" alt="">
               <div class="details">
-                <h4>Logo 3</h4>
-                <span>Alored dono par</span>
+                <h4></h4>
+                <span>Eagle Eye</span>
               </div>
             </a>
           </div>
 
           <div class="col-lg-3 col-md-6 portfolio-item filter-web">
             <a href="">
-              <img src="{% static 'img/portfolio/web1.jpg' %}" alt="">
+              <img src="{% static 'img/portfolio/movie11.jpg' %}" alt="">
               <div class="details">
-                <h4>Web 1</h4>
-                <span>Alored dono par</span>
+                <h4></h4>
+                <span>Narnia</span>
               </div>
             </a>
           </div>
 
           <div class="col-lg-3 col-md-6 portfolio-item filter-logo">
             <a href="">
-              <img src="{% static 'img/portfolio/logo2.jpg' %}" alt="">
+              <img src="{% static 'img/portfolio/movie12.jpg' %}" alt="">
               <div class="details">
-                <h4>Logo 2</h4>
-                <span>Alored dono par</span>
+                <h4></h4>
+                <span>Angels & Demons</span>
               </div>
             </a>
           </div>
@@ -360,86 +301,15 @@
     </section><!-- #portfolio -->
 
     <!--==========================
-      Team Section
-    ============================-->
-    <section id="team">
-      <div class="container wow fadeInUp">
-        <div class="section-header">
-          <h3 class="section-title">Team</h3>
-          <p class="section-description">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque</p>
-        </div>
-        <div class="row">
-          <div class="col-lg-3 col-md-6">
-            <div class="member">
-              <div class="pic"><img src="{% static 'img/team-1.jpg' %}" alt=""></div>
-              <h4>Walter White</h4>
-              <span>Chief Executive Officer</span>
-              <div class="social">
-                <a href=""><i class="fa fa-twitter"></i></a>
-                <a href=""><i class="fa fa-facebook"></i></a>
-                <a href=""><i class="fa fa-google-plus"></i></a>
-                <a href=""><i class="fa fa-linkedin"></i></a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6">
-            <div class="member">
-              <div class="pic"><img src="{% static 'img/team-2.jpg' %}" alt=""></div>
-              <h4>Sarah Jhinson</h4>
-              <span>Product Manager</span>
-              <div class="social">
-                <a href=""><i class="fa fa-twitter"></i></a>
-                <a href=""><i class="fa fa-facebook"></i></a>
-                <a href=""><i class="fa fa-google-plus"></i></a>
-                <a href=""><i class="fa fa-linkedin"></i></a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6">
-            <div class="member">
-              <div class="pic"><img src="{% static 'img/team-3.jpg' %}" alt=""></div>
-              <h4>William Anderson</h4>
-              <span>CTO</span>
-              <div class="social">
-                <a href=""><i class="fa fa-twitter"></i></a>
-                <a href=""><i class="fa fa-facebook"></i></a>
-                <a href=""><i class="fa fa-google-plus"></i></a>
-                <a href=""><i class="fa fa-linkedin"></i></a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-3 col-md-6">
-            <div class="member">
-              <div class="pic"><img src="{% static 'img/team-4.jpg' %}" alt=""></div>
-              <h4>Amanda Jepson</h4>
-              <span>Accountant</span>
-              <div class="social">
-                <a href=""><i class="fa fa-twitter"></i></a>
-                <a href=""><i class="fa fa-facebook"></i></a>
-                <a href=""><i class="fa fa-google-plus"></i></a>
-                <a href=""><i class="fa fa-linkedin"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section><!-- #team -->
-
-    <!--==========================
       Contact Section
     ============================-->
     <section id="contact">
       <div class="container wow fadeInUp">
         <div class="section-header">
           <h3 class="section-title">Contact</h3>
-          <p class="section-description">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque</p>
         </div>
       </div>
-
+<br>
       <!-- Uncomment below if you wan to use dynamic maps -->
       <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d22864.11283411948!2d-73.96468908098944!3d40.630720240038435!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew+York%2C+NY%2C+USA!5e0!3m2!1sen!2sbg!4v1540447494452" width="100%" height="380" frameborder="0" style="border:0" allowfullscreen></iframe>
 

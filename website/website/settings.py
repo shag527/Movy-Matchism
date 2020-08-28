@@ -86,12 +86,8 @@ WSGI_APPLICATION = 'website.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'Movy-Matchism',
-        'USER': 'root',
-        'PASSWORD': 'w0rldt0pc0der',
-        'HOST': 'localhost',
-        'PORT': '3306',
     }
 }
 

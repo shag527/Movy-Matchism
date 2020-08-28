@@ -1,11 +1,12 @@
 # Movy-Matcher
-A Web Based Movie Recommendation Engine using Content and Collaborative Filtering. The basic idea behind recommendation is that if two persons likes certian common movies,then the movies which one person has liked can be recommended to the other person, if he has not watched it yet.   
-### Screenshot
+A Web Based Movie Recommendation Engine using Content and Collaborative Filtering. The basic idea behind recommendation is that if two persons likes certian common movies,then the movies which one person has liked can be recommended to the other person, if he has not watched it yet. 
 
-###### Home page
+### Screenshots
+
+#### Home page
 ![home](https://github.com/shag527/Movy-Matchism/blob/master/home.png)
 
-###### Movies page
+#### Movies page
 ![recom](https://github.com/shag527/Movy-Matchism/blob/master/movies.png)
 
 

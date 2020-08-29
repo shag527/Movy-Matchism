@@ -21,6 +21,9 @@ Numpy , Pandas , Scipy, Sklearn
 #### Database
 PostgreSQL
 
+#### Others
+Twilio API , Django Rest Framework
+
 ##### Requirements
 ```
 python 3

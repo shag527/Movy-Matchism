@@ -53,6 +53,8 @@ cd Scripts
 then
 activate
 ```
++ Go to the website folder
+
 ### To install Dependencies
 
 ```

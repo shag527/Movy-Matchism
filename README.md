@@ -63,7 +63,7 @@ pip install -r requirements.txt
 
 ### To run
 ```
-python manage.py runserver
+python website/manage.py runserver
 ```
 Now open your browser and go to this address
 ```

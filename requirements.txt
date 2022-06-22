@@ -11,7 +11,7 @@ jupyter-core==4.6.3
 mysql==0.0.2
 mysqlclient==1.4.6
 notebook==6.1.5
-numpy==1.18.4.1
+numpy==1.22.0
 pandas==1.0.3
 pickleshare==0.7.4
 PyMySQL==0.9.3
